@@ -19,8 +19,15 @@ class cfgFunctions {
         class crows_server {
                 file = crows\functions\server;
 
+                class createCrows;
+                class debugMarker;
+                class flockingAlgorithm;
+                class getObjectDimensions;
+                class getTerrainObjects;
+                
                 class initCrows { postInit = 1; };
-                class registerShot {};
+
+                class startleFlock;
         };
 
     };

@@ -1,19 +1,33 @@
-GRAD_CROWS_DEBUG = false;
 
-GRAD_CROWS_STARTLING_DISTANCE = 200;
-GRAD_CROWS_COUNT = 13;
-GRAD_CROWS_REGISTERSHOTS = false; // for ambient crows
+private _flocks = call grad_crows_fnc_createCrows;
 
-
-if (GRAD_CROWS_REGISTERSHOTS) then {
+{
+	private _crows = _x;
 
 	{
-		_firedEH = _x addEventHandler ["FiredMan",{
-			[getPos (_this select 0)] call GRAD_crows_fnc_registerShot;
-		}];
-	} forEach allUnits;
+		private _crowe = _x;
 
-};
+		// lead or "detection" crow
+		if (_foreachindex == 0) then {
+			private _detector = createVehicle ["Sign_Sphere200cm_F", position _crowe, [], 0, "CAN_COLLIDE"];
+        	_detector setObjectTextureGlobal [0, "#(rgb,8,8,3)color(1,0,0,1)"];
+
+			_detector addEventHandler ["Fired", {
+				params ["_unit", "_firer", "_distance", "_weapon", "_muzzle", "_mode", "_ammo", "_gunner"];
+
+				private _positionUnit = getPos _unit;
+				private _positionFirer = getPos _firer;
+				private _flock = _unit getVariable ["grad_crows_flock", []];
+				[_positionUnit, _positionFirer, _flock] call grad_crows_fnc_startleFlock;
+
+				deleteVehicle _unit;
+			}];
+
+			_detector setVariable ["grad_crows_flock", _crows, true];
+		};
+	} forEach _crows;
+	
+} forEach _flocks;
 
 diag_log "initializing grad crows... done";
 
