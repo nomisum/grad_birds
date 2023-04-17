@@ -1,5 +1,5 @@
 
-private _flockCount = 9; // count of flocks distributed over map
+private _flockCount = 60; // count of flocks distributed over map
 
 private _flockSizeMin = 1; // minimum size of birds on one position
 private _flockSizeMax = 35; // maximum size of birds on one position

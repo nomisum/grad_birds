@@ -18,7 +18,7 @@ if (isNil "grad_crows_objects") then {
 };
 
 
-private _allMapObjects = nearestTerrainObjects [[worldsize/2, worldSize/2], ["HIDE"], worldSize/2];
+private _allMapObjects = nearestTerrainObjects [[worldsize/2, worldSize/2], ["HIDE", "STATIC"], worldSize/2];
 
 private _count = 0;
 private _suitableObjects = [];
