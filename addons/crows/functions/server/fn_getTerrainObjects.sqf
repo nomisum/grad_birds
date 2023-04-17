@@ -3,7 +3,10 @@ private _maxCount = 1000;
 private _supportedObjects = [
     "garbagebags_f.p3d",
     "garbage_misc.p3d",
-    "garbage_metal.p3d"
+    "garbage_metal.p3d",
+    "misc_cable_rugs1_ep1.p3d",
+    "powerline_01_pole_tall_f.p3d",
+    "powerline_01_pole_lamp_f.p3d"
 ];
 
 if (isNil "grad_crows_objects") then {

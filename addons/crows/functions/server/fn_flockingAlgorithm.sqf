@@ -15,7 +15,9 @@ grad_crows_interval = 1;
 // Define the main loop
 [{
 	params ["_args", "_handle"];
-	_args params ["_flock"];
+	_args params ["_thisFlock"];
+	
+	
 
 	{
 		private _boid = _x;
@@ -25,14 +27,21 @@ grad_crows_interval = 1;
 		private _vectorUpPrevious = vectorDirVisual _boid;
 		private _vectorDirPrevious = vectorDirVisual _boid;
 
+		private _currentTime = diag_tickTime;
+		private _lastSeen = _boid getVariable ["grad_crows_lastSeen",diag_tickTime];
+		private _timeSinceLastSeen = _currentTime - _lastSeen;
+
 		// Find the neighboring _boids
 		private _neighbors = [];
 		{
 			private _neighbour = _x;
-			if (_neighbour != _boid && alive _neighbour && vehicle _neighbour == _boid && (getPos _neighbour distance _posPrevious) < grad_crows_cohesion_dist) then {
+			if (
+				_neighbour != _boid && alive _neighbour && vehicle _neighbour == _boid && 
+				(getPos _neighbour distance _posPrevious) < grad_crows_cohesion_dist
+				) then {
 				_neighbors pushBack _neighbour;
-			}
-		} forEach _flock;
+			};
+		} forEach _thisFlock;
 
 		// Calculate the separation, alignment, and cohesion vectors
 		private _separation = [0, 0, 0];
@@ -56,23 +65,23 @@ grad_crows_interval = 1;
 		} forEach _neighbors;
 
 		// Divide the separation, alignment, and cohesion vectors by the number of _neighbors
-		_separation = [_separation, count _neighbors] call BIS_fnc_vectorDivide;
-		_alignment = [_alignment, count _neighbors] call BIS_fnc_vectorDivide;
-		_cohesion = [_cohesion, count _neighbors] call BIS_fnc_vectorDivide;
+		_separation = [_separation, count _neighbors max 1] call BIS_fnc_vectorDivide;
+		_alignment = [_alignment, count _neighbors max 1] call BIS_fnc_vectorDivide;
+		_cohesion = [_cohesion, count _neighbors max 1] call BIS_fnc_vectorDivide;
 
 		// Normalize the vectors
-		_separation = vectorNormalized _separation;
-		_alignment = vectorNormalized _alignment;
-		_cohesion = vectorNormalized _cohesion;
+		_separation = (if (vectorMagnitude _separation > 0) then {vectorNormalized _separation} else {_separation});
+		_alignment = (if (vectorMagnitude _alignment > 0) then {vectorNormalized _alignment} else {_alignment}); // vectorNormalized _alignment;
+		_cohesion = (if (vectorMagnitude _cohesion > 0) then {vectorNormalized _cohesion} else {_cohesion}); // vectorNormalized _cohesion;
 
 		// Add the separation, alignment, and cohesion vectors to the velocity
 		private _velNext = _velPrevious vectorAdd (_separation vectorMultiply grad_crows_max_force);
-		_velNext = _velPrevious vectorAdd (_alignment vectorMultiply grad_crows_max_force);
-		_velNext = _velPrevious vectorAdd (_cohesion vectorMultiply grad_crows_max_force);
+		_velNext = _velNext vectorAdd (_alignment vectorMultiply grad_crows_max_force);
+		_velNext = _velNext vectorAdd (_cohesion vectorMultiply grad_crows_max_force);
 
 		// Limit the speed
-		if (_velNext > grad_crows_max_speed) then {
-			_velNext = _velPrevious vectorMultiply (grad_crows_max_speed / _velPrevious);
+		if (vectorMagnitude _velNext > grad_crows_max_speed) then {
+			_velNext = _velNext vectorMultiply (grad_crows_max_speed / vectorMagnitude _velNext);
 		};
 
 		private _posNext = _posPrevious vectorAdd _separation vectorAdd _alignment vectorAdd _cohesion;
@@ -89,8 +98,9 @@ grad_crows_interval = 1;
 			_vectorDirNext,
 			_vectorUpPrevious,
 			_vectorUpNext, 
-			grad_crows_interval
+			linearConversion [_lastSeen, grad_crows_interval, _timeSinceLastSeen, 0, 1]
 		];
-	} forEach _flock;
+		_boid setVariable ["grad_crows_lastSeen",_currentTime];
+	} forEach _thisFlock;
     
 }, 0, [_flock]] call CBA_fnc_addPerFramehandler;
