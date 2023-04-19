@@ -5,7 +5,8 @@ private _flyingFlock = [];
 {
 	private _croweGround = _x;
 	private _position = (getPos _croweGround);
-	private _flyingCrowe = "crowe" camCreate _position;
+	_position set [2, _position#2 + 2];
+	private _flyingCrowe = createvehicle ["crowe", _position, [], 0, "CAN_COLLIDE"];
 
 	deletevehicle _croweGround;
 

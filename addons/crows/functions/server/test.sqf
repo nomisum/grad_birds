@@ -1,52 +1,43 @@
-params ["_flock"];
-
 // Define constants
-BOID_COUNT = count _flock; // Number of boids
+BOID_COUNT = 20; // Number of boids
 BOID_RADIUS = 5; // Radius within which boids interact
 SEPARATION_WEIGHT = 1; // Weight of separation behavior
 ALIGNMENT_WEIGHT = 1; // Weight of alignment behavior
 COHESION_WEIGHT = 1; // Weight of cohesion behavior
 SEEKER_WEIGHT = 0.5; // Weight of seeker behavior
-SEEKER_TARGET = [1000, 1000, 50]; // Target position for the seeker
+SEEKER_TARGET = [1000, 1000, 0]; // Target position for the seeker
 AVOIDANCE_DISTANCE = 5;
 
 // Initialize boids
-private _boids = [];
-for "_i" from 1 to BOID_COUNT do {
-    _boids set [_i, [_flock, _i] call fnc_createBoid];
+boids = [];
+for (i = 0; i < BOID_COUNT; i++) do {
+    boids set [i, call fnc_createBoid];
 };
 
 // Main loop
-[{
-	params ["_args", "_handle"];
-	_args params ["_boid", "_boids"];
-
-	 // Update boid positions and velocities
-    for "_i" from 1 to BOID_COUNT do {
-        private _boid = _boids select _i;
-        [_i, _boid, _boids] call fnc_updateBoids;
+while {true} do {
+    // Update boid positions and velocities
+    for (i = 0; i < BOID_COUNT; i++) do {
+        boid = boids select i;
+        [boid, boids] call fnc_updateBoids;
     };
 
-	if (BOID_COUNT < 1) then {
-		[_handle] call CBA_fnc_removePerFrameHandler;
-	};
-
-}, 1, [_boid, _boids]] call CBA_fnc_addPerFrameHandler;
-
+    // Sleep for a short time to avoid busy-waiting
+    sleep 0.01;
+};
 
 // Function to create a new boid
 fnc_createBoid = {
-	params ["_flock", "_index"];
-    _position = [getPos (_flock select _index)];
-    _velocity = [0, random 1, random 3 max 2];
+    _position = [random 1000, random 1000, 0];
+    _velocity = [random 2, random 2, 0];
     [_position, _velocity];
 };
 
 // Function to update a boid's position and velocity
 fnc_updateBoids = {
-	params ["_index", "_boid", "_boids"];
-    private ["_neighbors", "_separation", "_alignment", "_cohesion", "_seeker", "_acceleration", "_avoidance"];
+    private ["_boid", "_neighbors", "_separation", "_alignment", "_cohesion", "_seeker", "_acceleration"];
 
+    _boid = _this;
     _neighbors = [_boid, boids] call fnc_findNeighbors;
 
     // Calculate behaviors
@@ -55,24 +46,18 @@ fnc_updateBoids = {
     _cohesion = [_boid, _neighbors] call fnc_cohesionBehavior;
     _seeker = [_boid] call fnc_seekerBehavior;
     _avoidance = [_boid] call fnc_avoidanceBehaviour;
+    _approach = [_boid] call fnc_approachBehavior;
 
     // Calculate acceleration
-    _acceleration = (_separation vectorMultiply SEPARATION_WEIGHT) +
-                     (_alignment vectorMultiply ALIGNMENT_WEIGHT) +
-                     (_cohesion vectorMultiply COHESION_WEIGHT) +
-                     (_seeker vectorMultiply SEEKER_WEIGHT) +
-                     (_avoidance vectorMultiply AVOIDANCE_DISTANCE);
+    _acceleration = (_separation * SEPARATION_WEIGHT) +
+                     (_alignment * ALIGNMENT_WEIGHT) +
+                     (_cohesion * COHESION_WEIGHT) +
+                     (_seeker * SEEKER_WEIGHT) +
+                     (_avoidance * AVOIDANCE_DISTANCE);
 
     // Update velocity and position
-	// oid set [1, _boid select 1 + _acceleration];
-	_boid params ["_position", "_velocity"];
-    _boid set [1, _velocity vectorMultiply _acceleration];
-    _boid set [0, _position vectorAdd _velocity];
-
-	// actually moving the cam
-	private _crowe = _flock select _index;
-	_boid params ["_position", "_velocity"];
-	[_boid, _position, _velocity] call grad_crows_fnc_crowMoveTo;
+    _boid set [1, _boid select 1 + _acceleration];
+    _boid set [0, _boid select 0 + _boid select 1];
 };
 
 // Function to find neighboring boids within a certain radius
@@ -84,7 +69,7 @@ fnc_findNeighbors = {
     _neighbors = [];
 
     {
-        if (_boid distance _x < BOID_RADIUS) then {
+        if (_boid distance2D _x < BOID_RADIUS) then {
             _neighbors pushBack _x;
         };
     } forEach _boids;
@@ -186,4 +171,21 @@ fnc_avoidanceBehaviour = {
 
     _avoidance = _avoidanceDirection;
     _avoidance;
+};
+
+
+fnc_approachBehavior = {
+    private ["_boid", "_approach", "_targetPosition"];
+
+    _boid = _this select 0;
+    _targetPosition = APPROACH_TARGET;
+    _approach = _targetPosition - _boid;
+
+    if (vectorMagnitude(_approach) < APPROACH_DISTANCE) then {
+        _approach = _approach * (vectorMagnitude(_approach) / APPROACH_DISTANCE);
+    } else {
+        _approach = _approach * 0.1;
+    };
+
+    _approach;
 };

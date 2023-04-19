@@ -10,7 +10,7 @@ private _flocks = call grad_crows_fnc_createCrows;
 		// lead or "detection" crow
 		if (_foreachindex == 0) then {
 			private _detector = createVehicle ["Sign_Sphere200cm_F", position _crowe, [], 0, "CAN_COLLIDE"];
-        	_detector setObjectTextureGlobal [0, "#(rgb,8,8,3)color(1,0,0,1)"];
+        	_detector setObjectTextureGlobal [0, "#(rgb,8,8,3)color(1,0,0,0)"];
 
 			_detector addEventHandler ["FiredNear", {
 				params ["_unit", "_firer", "_distance", "_weapon", "_muzzle", "_mode", "_ammo", "_gunner"];
