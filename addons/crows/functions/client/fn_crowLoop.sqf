@@ -24,7 +24,7 @@ grad_crows_max_force = 1;
 			private _crow = _x;
 			private _hiddenCrow = _hiddenFlock#_forEachIndex;
 
-			[_crow, getPos _hiddenCrow, 1] call grad_crows_fnc_crowMoveTo;
+			[_crow, getPosASL _hiddenCrow, 1] call grad_crows_fnc_crowMoveTo;
 
 			[{
 				params ["_crow", "_hiddenCrow"];
@@ -48,19 +48,18 @@ grad_crows_max_force = 1;
 		if (_crow == _leadcrow) then {
 			private _wpIndex = _crow getVariable ["grad_crows_wpIndex", 0];
 			private _maxWps = count _wps;
-
-			if (_wpIndex >= (_maxWps-1)) then {
-				_wpIndex = 0;
-			} else {
-				_wpIndex = _wpIndex + 1;
-				_crow setVariable ["grad_crows_wpIndex", _wpIndex];
-			};
-
 			private _currentWP = _wps#_wpIndex;
 
 			if (_crow distance _currentWP < 1) then {
-				[_crow, _currentWP, 1] call grad_crows_fnc_crowMoveTo;
+				if (_wpIndex >= (_maxWps-1)) then {
+					_wpIndex = 0;
+				} else {
+					_wpIndex = _wpIndex + 1;
+					_crow setVariable ["grad_crows_wpIndex", _wpIndex];
+				};
 			};
+				
+			[_crow, _currentWP, 1] call grad_crows_fnc_crowMoveTo;
 		} else {
 		
 			// run after lead crow and align to other crows
@@ -104,7 +103,7 @@ grad_crows_max_force = 1;
 					};
 
 					private _posNext = _posPrevious vectorAdd _separation vectorAdd _alignment vectorAdd _cohesion;
-					[_crow, _posNext, _velNext] call grad_crows_fnc_crowMoveTo;
+					[_crow, _posNext, vectorMagnitude _velNext] call grad_crows_fnc_crowMoveTo;
 				};
 					
 			} forEach _flock;

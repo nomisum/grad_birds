@@ -6,9 +6,10 @@ private _flock = _flockManager getVariable ["grad_crows_flockOnGround", []];
 if (count _flock < 1) exitWith {};
 
 
-private _crowe = _flock#0;
+private _crowGround = _flock#0;
+private _position = _crowGround getVariable ["grad_crows_positionASL", [0,0,0]];
 
-private _combatDetector = createVehicle ["Sign_Sphere200cm_F", position _crowe, [], 0, "CAN_COLLIDE"];
+private _combatDetector = createVehicle ["Sign_Sphere200cm_F", ASLtoAGL _position, [], 0, "CAN_COLLIDE"];
 _combatDetector setObjectTextureGlobal [0, "#(rgb,8,8,3)color(0,1,0,0.1)"];
 _combatDetector setVariable ["grad_crows_flockManager", _flockManager, true];
 
@@ -32,7 +33,7 @@ _combatDetector addEventHandler ["FiredNear", {
 
 private _unitDetector = createTrigger ["EmptyDetector", getPos _flockManager, false];
 _unitDetector setVariable ["grad_crows_flockManager", _flockManager];
-_unitDetector setTriggerActivation ["ANY", "PRESENT", true];
+_unitDetector setTriggerActivation ["GROUP", "PRESENT", true];
 _unitDetector setTriggerArea [random 7 max 3, random 7 max 3, 0, true, 250];
 _unitDetector setTriggerInterval 2;
 _unitDetector setTriggerStatements

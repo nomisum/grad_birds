@@ -13,12 +13,14 @@ for "_i" from 1 to _flockCount do {
 	private _size = floor (random _flockSizeMax) max _flockSizeMin;
 	private _targetObject = selectRandom grad_crows_mapPositions;
 	private _flockManager = (creategroup sideLogic) createUnit ["Logic", getPos _targetObject, [], 0, "NONE"];
-    ([_targetObject] call grad_crows_fnc_getObjectDimensions) params ["_width", "_length", "_height"];
-
+    ([_targetObject] call grad_crows_fnc_getObjectDimensions) params ["_width", "_length", "_height"];	
+					
 	private _flockSingle = [];
 	// count of birds in flock
 	for "_k" from _flockSizeMin to _size do {
-		private _position = [[_width, _length, getDir _targetObject, true]] call BIS_fnc_randomPos;
+		
+		// Generate a random position within the bounding box
+		private _position = [[[getPos _targetObject, [_width, _length, getDir _targetObject, true]]], []] call BIS_fnc_randomPos;
 
 		private _positionsOnTopASL = (lineIntersectsSurfaces [
 			_position vectorAdd [0, 0, 50],
@@ -34,12 +36,13 @@ for "_i" from 1 to _flockCount do {
 			private _positionFromArray = (_positionsOnTopASL select 0 select 0);
 			// systemchat str _positionFromArray;
 
-			private _crowe = createSimpleObject ["\crows\data\seagull_modified6.p3d", _positionFromArray, false]; 
-			_crowe setDir (random 360);
+			private _crowGround = createSimpleObject ["\crows\data\seagull_modified6.p3d", _positionFromArray, false]; 
+			_crowGround setDir (random 360);
+			_crowGround setVariable ["grad_crows_positionASL", _positionFromArray];
 
 			[_positionFromArray] call grad_crows_fnc_debugMarker;
 
-			_flockSingle pushBackUnique _crowe;		
+			_flockSingle pushBackUnique _crowGround;		
 		};
 		
 		if (count _flockSingle > 0 ) then {

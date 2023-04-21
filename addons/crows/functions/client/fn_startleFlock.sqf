@@ -14,6 +14,8 @@ private _flyingFlock = [];
 	_flyingFlock pushBackUnique _flyingCrowe;
 } forEach _flockOnGround;
 
+_flockManager say3d ["fx_crows_takeoff", 100];
+
 systemChat ("startle " + str _flockManager);
 diag_log ("startle " + str _flockManager);
 [{
