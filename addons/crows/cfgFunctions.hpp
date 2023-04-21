@@ -3,31 +3,28 @@ class cfgFunctions {
 
         class crows_client {
                 file = crows\functions\client;
+                
+                class crowLoop;
+                class crowMoveTo;
+                class flockingAlgorithm;
 
-                class crowCreate {};
-                class crowGetWp {};
-                class crowLoop {};
-                class crowLoopSingle {};
-                class crowMoveNear {};
-                class crowMoveTo {};
-                class crowSingleCreate {};
-                class setBirdTarget {};
-                class setCirclePoint {};
-                class startleBirds {};
+                class startleFlock;
         };
 
         class crows_server {
                 file = crows\functions\server;
 
+                class cacheTerrainObjects;
+                class checkTimeout;
+
                 class createCrows;
+                class createDetector;
                 class debugMarker;
-                class flockingAlgorithm;
                 class getObjectDimensions;
-                class getTerrainObjects;
                 
                 class initCrows { postInit = 1; };
 
-                class startleFlock;
+                class triggerStartle;
         };
 
     };

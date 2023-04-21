@@ -17,8 +17,10 @@ if (isNil "grad_crows_objects") then {
 	} forEach _supportedObjects;
 };
 
+grad_crows_mapPositions = [];
 
-private _allMapObjects = nearestTerrainObjects [[worldsize/2, worldSize/2], ["HIDE", "STATIC"], worldSize/2];
+
+private _allMapObjects = nearestTerrainObjects [[worldsize/2, worldSize/2], [], worldSize/2];
 
 private _count = 0;
 private _suitableObjects = [];
@@ -30,4 +32,4 @@ private _suitableObjects = [];
 
 } forEach _allMapObjects;
 
-_suitableObjects
+grad_crows_mapPositions = _suitableObjects;

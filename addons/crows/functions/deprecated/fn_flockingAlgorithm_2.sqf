@@ -66,7 +66,7 @@ fnc_updateBoids = {
     // Update velocity and position
 	// oid set [1, _boid select 1 + _acceleration];
 	_boid params ["_position", "_velocity"];
-    _boid set [1, _velocity vectorMultiply _acceleration];
+    _boid set [1, _velocity vectorAdd _acceleration];
     _boid set [0, _position vectorAdd _velocity];
 
 	// actually moving the cam
