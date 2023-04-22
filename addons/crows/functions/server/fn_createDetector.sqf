@@ -33,12 +33,12 @@ _combatDetector addEventHandler ["FiredNear", {
 
 private _unitDetector = createTrigger ["EmptyDetector", getPos _flockManager, false];
 _unitDetector setVariable ["grad_crows_flockManager", _flockManager];
-_unitDetector setTriggerActivation ["GROUP", "PRESENT", true];
+_unitDetector setTriggerActivation ["ANYBODY", "PRESENT", true];
 _unitDetector setTriggerArea [random 7 max 3, random 7 max 3, 0, true, 250];
 _unitDetector setTriggerInterval 2;
 _unitDetector setTriggerStatements
 [
-	"this",
+	"{ _x isKindOf ""Man"" } count thisList > 0",
 	"
 		private _flockManager = thisTrigger getVariable [""grad_crows_flockManager"", objNull];
 		[_flockManager] call grad_crows_fnc_triggerStartle;
@@ -50,12 +50,12 @@ _unitDetector setTriggerStatements
 
 private _vehicleDetector = createTrigger ["EmptyDetector", getPos _flockManager, false];
 _vehicleDetector setVariable ["grad_crows_flockManager", _flockManager];
-_vehicleDetector setTriggerActivation ["VEHICLE", "PRESENT", true];
+_vehicleDetector setTriggerActivation ["ANYBODY", "PRESENT", true];
 _vehicleDetector setTriggerArea [random 15 max 10, random 15 max 10, 0, true, 250];
 _vehicleDetector setTriggerInterval 2;
 _vehicleDetector setTriggerStatements
 [
-	"this",
+	"{ _x isKindOf ""LandVehicle"" } count thisList > 0 || { _x isKindOf ""Air"" } count thisList > 0",
 	"
 		private _flockManager = thisTrigger getVariable [""grad_crows_flockManager"", objNull];
 		[_flockManager] call grad_crows_fnc_triggerStartle;

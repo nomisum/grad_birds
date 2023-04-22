@@ -1,6 +1,6 @@
-params ["_crow", "_targetWpASL", ["_speed", 1]];
+params ["_crow", "_targetWp", ["_speed", 1]];
 
-private _timeToWp = (_crow distance _targetWpASL) * _speed;
+private _timeToWp = (_crow distance _targetWp) * _speed;
 
-_crow camsetpos ASLtoAGL _targetWpASL;
+_crow camsetpos _targetWp;
 _crow camcommit _timeToWp;

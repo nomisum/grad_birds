@@ -18,13 +18,14 @@ grad_crows_max_force = 1;
 	private _canLand = !_startled;
 	private _hiddenFlock = _flockManager getVariable ["grad_crows_flockOnGround", []];
 	private _leadcrow = _flock#0;
+	private _crowCount = count _flock;
 
 	if (_canLand) exitWith {
 		{
 			private _crow = _x;
 			private _hiddenCrow = _hiddenFlock#_forEachIndex;
 
-			[_crow, getPosASL _hiddenCrow, 1] call grad_crows_fnc_crowMoveTo;
+			[_crow, getPos _hiddenCrow, 1] call grad_crows_fnc_crowMoveTo;
 
 			[{
 				params ["_crow", "_hiddenCrow"];
@@ -46,70 +47,30 @@ grad_crows_max_force = 1;
 		private _crow = _x;
 		
 		if (_crow == _leadcrow) then {
-			private _wpIndex = _crow getVariable ["grad_crows_wpIndex", 0];
+			private _wpIndex = _leadcrow getVariable ["grad_crows_wpIndex", 0];
 			private _maxWps = count _wps;
 			private _currentWP = _wps#_wpIndex;
 
-			if (_crow distance _currentWP < 1) then {
+			if (_leadcrow distance2d _currentWP < 3 || speed _leadcrow == 0) then {
 				if (_wpIndex >= (_maxWps-1)) then {
 					_wpIndex = 0;
 				} else {
 					_wpIndex = _wpIndex + 1;
-					_crow setVariable ["grad_crows_wpIndex", _wpIndex];
 				};
+				_leadcrow setVariable ["grad_crows_wpIndex", _wpIndex];
 			};
 				
-			[_crow, _currentWP, 1] call grad_crows_fnc_crowMoveTo;
-		} else {
-		
-			// run after lead crow and align to other crows
-			{
-				private _neighbour = _x;
-				private _crowCount = count _flock;
+			[_leadcrow, _currentWP, 1] call grad_crows_fnc_crowMoveTo;
+		} else {		
+			private _randomPosition = getpos _leadcrow;
+			_randomPosition set [0, _randomPosition#0 + random 2 - random 4];
+			_randomPosition set [1, _randomPosition#1 + random 2 - random 4];
+			_randomPosition set [2, _randomPosition#2 + random 2 - random 4];
 
-				if (_neighbour != _crow) then {
-
-					private _posPrevious = getPos _leadcrow;
-					// Calculate the separation vector - no separation allowed
-					private _separation = [0,0,0] vectorAdd (_posPrevious vectorDiff getPos _neighbour);
-					private _alignment = [0,0,0];
-
-					// Calculate the alignment vector 
-					if (_neighbour distance _posPrevious < grad_crows_alignment_dist) then {
-						_alignment = _alignment vectorAdd velocity _neighbour;
-					};
-
-					// Calculate the cohesion vector
-					private _cohesion = [0,0,0] vectorAdd getPos _neighbour;
-
-					// Divide the separation, alignment, and cohesion vectors by the number of _neighbors
-					_separation = [_separation, _crowCount max 1] call BIS_fnc_vectorDivide;
-					_alignment = [_alignment, _crowCount max 1] call BIS_fnc_vectorDivide;
-					_cohesion = [_cohesion, _crowCount max 1] call BIS_fnc_vectorDivide;
-
-					// Normalize the vectors
-					_separation = (if (vectorMagnitude _separation > 0) then {vectorNormalized _separation} else {_separation});
-					_alignment = (if (vectorMagnitude _alignment > 0) then {vectorNormalized _alignment} else {_alignment}); // vectorNormalized _alignment;
-					_cohesion = (if (vectorMagnitude _cohesion > 0) then {vectorNormalized _cohesion} else {_cohesion}); // vectorNormalized _cohesion;
-
-					// Add the separation, alignment, and cohesion vectors to the velocity
-					private _velNext = _velPrevious vectorAdd (_separation vectorMultiply grad_crows_max_force);
-					_velNext = _velNext vectorAdd (_alignment vectorMultiply grad_crows_max_force);
-					_velNext = _velNext vectorAdd (_cohesion vectorMultiply grad_crows_max_force);
-
-					// Limit the speed
-					if (vectorMagnitude _velNext > grad_crows_max_speed) then {
-						_velNext = _velNext vectorMultiply (grad_crows_max_speed / vectorMagnitude _velNext);
-					};
-
-					private _posNext = _posPrevious vectorAdd _separation vectorAdd _alignment vectorAdd _cohesion;
-					[_crow, _posNext, vectorMagnitude _velNext] call grad_crows_fnc_crowMoveTo;
-				};
-					
-			} forEach _flock;
+			[_crow, _randomPosition, 1] call grad_crows_fnc_crowMoveTo;
 		};
 
 	} forEach _flock;
 	
-}, 1, [_flockManager, _flock, _crow, _wps]] call CBA_fnc_addPerFrameHandler;
+}, 1, [_flockManager, _flock, _wps]] call CBA_fnc_addPerFrameHandler;
 

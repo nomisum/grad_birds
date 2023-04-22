@@ -12,6 +12,7 @@ private _flyingFlock = [];
 	hideObject _croweGround;
 
 	_flyingFlock pushBackUnique _flyingCrowe;
+	sleep (random 0.1);
 } forEach _flockOnGround;
 
 _flockManager say3d ["fx_crows_takeoff", 100];
