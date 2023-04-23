@@ -1,7 +1,7 @@
 params ["_flockManager", "_flock"];
 
 private _flockPos = getPos _flockManager;
-private _flockArea = random 20 max 10;
+private _flockArea = random 30 max 20;
 private _flockHeight = 30 + random 10;
 
 _flockPos set [2,_flockHeight];

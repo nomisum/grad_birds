@@ -1,0 +1,122 @@
+class CfgMovesAnimal_Base_F {
+	class Default;
+    class Actions;
+    class NoActions;
+    class BlendAnims;
+};
+class CfgMovesGradCrowe: CfgMovesAnimal_Base_F
+{
+    skeletonName = "SeagullSkeleton";
+    collisionVertexPattern[] = {"1a","2a","3a","4a","5a","6a","7a","8a","9a","10a","11a","12a","13a","14a","15a","16a","17a","18a","19a","20a","21a","22a","23a","24a","25a","26a","27a","28a","29a","30a","31a","32a","33a","34a"};
+    collisionGeomCompPattern[] = {1};
+    class Default: Default
+    {
+        actions = "GradCroweActions";
+        collisionShape = "A3\animals_f\empty_CollShape.p3d";
+    };
+    class DefaultDie: Default{};
+    class StandBase: Default{};
+    class States
+    {
+        class Hen_Idle_Stop: StandBase
+        {
+            duty = -1;
+            file = "\A3\animals_f\data\anim\land.rtm";
+            looped = 0;
+            speed = -0.25;
+            variantsAI[] = {"Hen_Idle_Stop",0.1,"Hen_Idle_Walk",0.3};
+            variantsPlayer[] = {};
+            variantAfter[] = {3,6,9};
+            connectTo[] = {"Hen_Idle_Stop",0.1};
+            interpolateTo[] = {"Hen_Idle_Walk",0.1,"Hen_Stop",0.5,"Hen_Walk",0.5,"Hen_Die",0.1};
+            preload = 1;
+        };
+        class Hen_Idle_Walk: Hen_Idle_Stop
+        {
+            duty = -0.7;
+            file = "\A3\animals_f\data\anim\flying.rtm";
+            looped = 1;
+            speed = -0.25;
+            walkcycles = 1;
+            head = "headDefault";
+            variantsAI[] = {};
+            connectTo[] = {"Hen_Idle_Walk",0.1};
+            interpolateTo[] = {"Hen_Idle_Stop",0.1,"Hen_Stop",0.5,"Hen_Walk",0.5,"Hen_Die",0.1};
+        };
+        class Hen_Die: DefaultDie
+        {
+            file = "\A3\animals_f\data\anim\flying.rtm";
+            speed = 0;
+            actions = "NoActions";
+            looped = 0;
+            variantsPlayer[] = {};
+            variantsAI[] = {};
+            variantAfter[] = {0,0,0};
+            terminal = 1;
+        };
+        class Hen_Stop: Hen_Idle_Stop
+        {
+            variantsAI[] = {};
+            actions = "HenForceStop";
+            connectTo[] = {"Hen_Stop",0.02};
+            interpolateTo[] = {"Hen_Idle_Stop",0.02,"Hen_Walk",0.02,"Hen_Die",0.02};
+        };
+        class Hen_Walk: Hen_Idle_Walk
+        {
+            actions = "HenForceWalk";
+            connectTo[] = {"Hen_Walk",0.02};
+            interpolateTo[] = {"Hen_Idle_Stop",0.02,"Hen_Stop",0.02,"Hen_Die",0.02};
+        };
+    };
+    class Actions: Actions
+    {
+        class NoActions: NoActions{};
+        class GradCroweActions: NoActions
+        {
+            Stop = "Hen_Idle_Stop";
+            StopRelaxed = "Hen_Idle_Stop";
+            TurnL = "Hen_Idle_Stop";
+            TurnR = "Hen_Idle_Stop";
+            TurnLRelaxed = "Hen_Idle_Stop";
+            TurnRRelaxed = "Hen_Idle_Stop";
+            Default = "Hen_Idle_Stop";
+            JumpOff = "Hen_Idle_Stop";
+            WalkF = "Hen_Idle_Walk";
+            SlowF = "Hen_Idle_Walk";
+            FastF = "Hen_Idle_Stop";
+            EvasiveForward = "Hen_Idle_Stop";
+            Down = "Hen_Lean";
+            Up = "Hen_Idle_Stop";
+            PlayerStand = "Hen_Idle_Stop";
+            PlayerCrouch = "Hen_Lean";
+            PlayerProne = "Hen_Idle_Stop";
+            Lying = "Hen_Lean";
+            Stand = "Hen_Idle_Stop";
+            Combat = "Hen_Idle_Stop";
+            Crouch = "Hen_Lean";
+            CanNotMove = "Hen_Idle_Stop";
+            Civil = "Hen_Idle_Stop";
+            CivilLying = "Hen_Idle_Stop";
+            FireNotPossible = "Hen_Idle_Stop";
+            Die = "Hen_Die";
+            Eat = "Hen_Idle_Stop";
+            Rest = "Hen_Lean";
+            turnSpeed = 1;
+            limitFast = 5.5;
+            useFastMove = 0;
+            upDegree = "ManPosNoWeapon";
+        };
+        class HenForceStop: GradCroweActions
+        {
+            CivilLying = "Hen_Stop";
+        };
+        class HenForceWalk: GradCroweActions
+        {
+            CivilLying = "Hen_Walk";
+        };
+    };
+    class BlendAnims: BlendAnims
+    {
+        headDefault[] = {"head",0.8,"neck",0.5,"LeftShoulder",0.1,"RightShoulder",0.1,"Spine1",0.2};
+    };
+};
