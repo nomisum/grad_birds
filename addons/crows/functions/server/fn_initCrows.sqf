@@ -1,4 +1,5 @@
 grad_crows_firedTimeout = 60;
+grad_crows_durationMultiplier = 0.1;
 
 call grad_crows_fnc_cacheTerrainObjects; // index map
 diag_log "GRAD CROWS - indexing map for grad crows...";

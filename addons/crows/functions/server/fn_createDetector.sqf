@@ -33,7 +33,7 @@ _combatDetector addEventHandler ["FiredNear", {
 
 private _unitDetector = createTrigger ["EmptyDetector", getPos _flockManager, false];
 _unitDetector setVariable ["grad_crows_flockManager", _flockManager];
-_unitDetector setTriggerActivation ["ANYBODY", "PRESENT", true];
+_unitDetector setTriggerActivation ["ANY", "PRESENT", true];
 _unitDetector setTriggerArea [random 7 max 3, random 7 max 3, 0, true, 250];
 _unitDetector setTriggerInterval 2;
 _unitDetector setTriggerStatements
@@ -50,7 +50,7 @@ _unitDetector setTriggerStatements
 
 private _vehicleDetector = createTrigger ["EmptyDetector", getPos _flockManager, false];
 _vehicleDetector setVariable ["grad_crows_flockManager", _flockManager];
-_vehicleDetector setTriggerActivation ["ANYBODY", "PRESENT", true];
+_vehicleDetector setTriggerActivation ["ANY", "PRESENT", true];
 _vehicleDetector setTriggerArea [random 15 max 10, random 15 max 10, 0, true, 250];
 _vehicleDetector setTriggerInterval 2;
 _vehicleDetector setTriggerStatements

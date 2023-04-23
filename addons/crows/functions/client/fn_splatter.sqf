@@ -53,7 +53,7 @@ _source2 setParticleCircle [0, [0, 0, 2]];
 _source2 setParticleRandom [0, [1, 1, 1], [2, 2, 2], 0, 0.3, [0, 0, 0, 0.1], 0, 0];  
 _source2 setParticleParams [
     ["\A3\data_f\ParticleEffects\Universal\Meat_ca.p3d", 1, 0, 1], "", "SpaceObject", 0.5, 120, 
-    [0.1, 0.1, 1], [0, 0, 0], 0.5, 200, 20, 3.75, [0.5,0.5,0.5], [[0.05, 0.05, 0.05, 1], [0.05, 0.05, 0.05, 0.3], [0.05, 0.05, 0.05, 0]], 
+    [0.1, 0.1, 1], [0, 0, 0], 0.5, 200, 20, 3.75, [0.5,0.5,0.5], [[1, 1, 1, 1], [1, 1, 1, 0.3], [1, 1, 1, 0]], 
     [0.08], 1, 0, "", "", _this,0,true,0.1
 ];  
 _source2 setDropInterval 0.001; 
@@ -61,9 +61,9 @@ _source2 setDropInterval 0.001;
 [{ 
     params ["_source"]; 
     deleteVehicle _source; 
-}, [_source] ,0.1] call CBA_fnc_waitAndExecute; 
+}, [_source] ,0.2] call CBA_fnc_waitAndExecute; 
  
 [{ 
     params ["_source2"]; 
     deleteVehicle _source2; 
-}, [_source2] ,0.1] call CBA_fnc_waitAndExecute;
+}, [_source2] ,0.2] call CBA_fnc_waitAndExecute;
