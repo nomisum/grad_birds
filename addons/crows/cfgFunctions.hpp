@@ -4,26 +4,27 @@ class cfgFunctions {
         class crows_client {
                 file = crows\functions\client;
                 
-                class crowLoop;
-                class crowMoveTo;
-                class flockingAlgorithm;
-
-                class startleFlock;
+                class splatter;
         };
 
         class crows_server {
                 file = crows\functions\server;
 
+                class addCrowHandlers;
                 class cacheTerrainObjects;
                 class checkTimeout;
-
                 class createCrows;
                 class createDetector;
+
                 class debugMarker;
                 class getObjectDimensions;
                 
                 class initCrows { postInit = 1; };
 
+                class moveCrowGlobal;
+
+                class startleFlock;
+                class startleStartFSM;
                 class triggerStartle;
         };
 

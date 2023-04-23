@@ -2,7 +2,24 @@ params ["_flyingCrow", "_fromPosAGL", "_toPosAGL", "_duration"];
 
 private _startTime = CBA_missionTime;   
 private _endTime = CBA_missionTime + _duration;
-  
+
+private _ascending = _toPosAGL#2 - _fromPosAGL#2 > 2;
+private _descending = _fromPosAGL#2 - _toPosAGL#2 > 2;
+
+if (_ascending) then {
+	[_flyingCrow,"grad_crowe_flyFast"] remoteExec ["switchmove"];
+};
+
+if (_descending) then {
+	[_flyingCrow,"grad_crowe_flySlow"] remoteExec ["switchmove"];
+};
+
+if (!_ascending && !_descending) then {
+	[_flyingCrow,"grad_crowe_flyDefault"] remoteExec ["switchmove"];
+};
+
+_flyingCrow setVariable ["grad_crows_moving", true];
+
 private _handle = [{   
 	params ["_args","_handle"];   
 	_args params ["_flyingCrow", "_startTime", "_endTime", "_fromPosAGL", "_toPosAGL"];   
@@ -12,6 +29,10 @@ private _handle = [{
 	private _currentVectorDir = vectorDir _flyingCrow;   
 	private _nextVectorDir = vectorDir _flyingCrow;   
 	private _currentVectorUp = vectorUp _flyingCrow;
+
+	if (!alive _flyingCrow) exitWith {
+		[_handle] call CBA_fnc_removePerFrameHandler;
+	};
 
 	
 	// Get the direction vector between the two points
@@ -47,7 +68,9 @@ private _handle = [{
      
    
 [{   
- 	params ["_handle", "_flyingCrow"];   
+ 	params ["_handle", "_flyingCrow"]; 
+	if (isNull _handle) exitWith {};
 	[_handle] call CBA_fnc_removePerFrameHandler;   
-	systemChat "removed"; 
+	// systemChat "removed"; 
+	_flyingCrow setVariable ["grad_crows_moving", false];
 }, [_handle, _flyingCrow], _duration] call CBA_fnc_waitAndExecute;   

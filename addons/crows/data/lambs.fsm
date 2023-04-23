@@ -1,0 +1,1005 @@
+/*%FSM<COMPILE "scriptedFSM.cfg, Danger">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"LAMBS_DANGER___v2",-1,250,-1225.000000,-425.000000,-875.000000,-175.000000,0.000000,"LAMBS DANGER - v2.6.0  ~ civilian fsm" \n "0 - DCEnemyDetected, // the first enemy detected" \n "1 - DCFire, // fire visible" \n "2 - DCHit, // vehicle hit" \n "3 - DCEnemyNear, // enemy very close to me" \n "4 - DCExplosion, // explosion detected" \n "5 - DCDeadBodyGroup, // dead soldier from my group found" \n "6 - DCDeadBody, // other dead soldier found" \n "7 - DCScream // hit soldier screaming" \n "8 - DCCanFire // can fire weapon ~nkenny" \n "9 - DCBulletClose // bullet whizzes by head - nkenny"};
+item1[] = {"Init",0,250,-850.000000,-425.000000,-700.000000,-350.000000,0.000000,"Init"};
+item2[] = {"End",1,250,150.000000,600.000000,250.000000,650.000000,0.000000,"End"};
+item3[] = {"Causes__4__7__9",4,218,-840.000000,-60.000000,-700.000000,0.000000,2.000000,"Causes:" \n "4, 7, 9"};
+item4[] = {"",7,210,-1454.000000,-141.500000,-1446.000000,-133.500000,0.000000,""};
+item5[] = {"Causes__1__2__3",4,218,-620.000000,-60.000000,-500.000000,0.000000,0.000000,"Causes:" \n "1, 2, 3, 8, 0"};
+item6[] = {"Always",8,218,-825.000000,-300.000000,-725.000000,-225.000000,0.000000,"Always"};
+item7[] = {"Clean_up",2,250,-700.000000,950.000000,-600.000000,1000.000000,0.000000,"Clean-up"};
+item8[] = {"Always",8,218,-725.000000,1175.000000,-575.000000,1275.000000,0.000000,"Always"};
+item9[] = {"Suppression",4,218,-600.000000,775.000000,-500.000000,825.000000,0.000000,"Suppression"};
+item10[] = {"Reset",2,250,-700.000000,1400.000000,-600.000000,1450.000000,0.000000,"Reset"};
+item11[] = {"Hide_vs__run",2,250,-540.000000,40.000000,-440.000000,100.000000,0.000000,"Hide vs. run"};
+item12[] = {"Vehicle",4,218,-920.000000,360.000000,-820.000000,420.000000,1.000000,"Vehicle"};
+item13[] = {"Man",8,218,-700.000000,350.000000,-600.000000,400.000000,0.000000,"Man"};
+item14[] = {"Man",2,250,-680.000000,600.000000,-580.000000,660.000000,0.000000,"Man"};
+item15[] = {"Order_out",2,250,-940.000000,600.000000,-840.000000,660.000000,0.000000,"Order out"};
+item16[] = {"Always",8,218,-800.000000,600.000000,-700.000000,660.000000,0.000000,"Always"};
+item17[] = {"Select_danger",2,250,-820.000000,-160.000000,-720.000000,-100.000000,0.000000,"Select danger"};
+item18[] = {"Hide",2,250,-820.000000,240.000000,-720.000000,300.000000,0.000000,"Hide"};
+item19[] = {"Hide",8,218,-700.000000,125.000000,-600.000000,175.000000,0.000000,"Hide"};
+item20[] = {"Run",4,218,-400.000000,120.000000,-280.000000,180.000000,1.000000,"Run"};
+item21[] = {"Escape_",-1,250,-360.000000,440.000000,-200.000000,560.000000,0.000000,"Escape!"};
+item22[] = {"Run",2,250,-340.000000,240.000000,-240.000000,300.000000,0.000000,"Run"};
+item23[] = {"Vehicle",4,218,-440.000000,360.000000,-340.000000,420.000000,1.000000,"Vehicle"};
+item24[] = {"Man",8,218,-225.000000,350.000000,-125.000000,400.000000,0.000000,"Man"};
+item25[] = {"Man_1",2,250,-200.000000,600.000000,-100.000000,650.000000,0.000000,"Man"};
+item26[] = {"Order_out_1",2,250,-460.000000,600.000000,-360.000000,660.000000,0.000000,"Order out"};
+item27[] = {"Always",8,218,-320.000000,600.000000,-220.000000,660.000000,0.000000,"Always"};
+item28[] = {"Max__time",4,218,-775.000000,775.000000,-675.000000,825.000000,1.000000,"Max. time"};
+item29[] = {"Causes__5__6",4,218,-1040.000000,-60.000000,-920.000000,0.000000,4.000000,"Causes:" \n "5, 6"};
+item30[] = {"Inspect_vs__hide",2,250,-1100.000000,40.000000,-1000.000000,100.000000,0.000000,"Inspect vs. hide"};
+item31[] = {"Inspect_body",4,218,-1260.000000,120.000000,-1140.000000,180.000000,1.000000,"Inspect body"};
+item32[] = {"Hide",8,218,-950.000000,125.000000,-850.000000,175.000000,0.000000,"Hide"};
+item33[] = {"Vehicle",4,218,-1400.000000,360.000000,-1300.000000,420.000000,1.000000,"Vehicle"};
+item34[] = {"Man",8,218,-1175.000000,350.000000,-1075.000000,400.000000,0.000000,"Man"};
+item35[] = {"Man_2",2,250,-1160.000000,600.000000,-1060.000000,660.000000,0.000000,"Man"};
+item36[] = {"Order_out_2",2,250,-1420.000000,600.000000,-1320.000000,660.000000,0.000000,"Order out"};
+item37[] = {"Always",8,218,-1280.000000,600.000000,-1180.000000,660.000000,0.000000,"Always"};
+item38[] = {"Inspect_body",2,250,-1280.000000,240.000000,-1180.000000,300.000000,0.000000,"Inspect body"};
+item39[] = {"Always",8,218,-1175.000000,775.000000,-1050.000000,850.000000,0.000000,"Always"};
+item40[] = {"Higher_priority",4,218,-925.000000,950.000000,-825.000000,1000.000000,1.000000,"Higher priority " \n "danger"};
+item41[] = {"Time_up",4,218,-1150.000000,1075.000000,-1050.000000,1125.000000,0.000000,"Time up"};
+item42[] = {"Clean_up_1",2,250,-925.000000,1100.000000,-825.000000,1150.000000,0.000000,"Clean-up"};
+item43[] = {"",7,210,-1104.000000,996.000000,-1096.000000,1003.999878,0.000000,""};
+item44[] = {"Clean_up_2",2,250,-1150.000000,1200.000000,-1050.000000,1250.000000,0.000000,"Clean-up"};
+item45[] = {"Inspect__dead_bo",-1,250,-1320.000000,440.000000,-1160.000000,560.000000,0.000000,"Inspect " \n "dead body"};
+item46[] = {"Hide_",-1,250,-840.000000,440.000000,-680.000000,560.000000,0.000000,"Hide!"};
+item47[] = {"Check_of_dangers",2,250,-1160.000000,940.000000,-1060.000000,1000.000000,0.000000,"Check" \n "of dangers"};
+item48[] = {"Timer",4,218,-1325.000000,950.000000,-1225.000000,1000.000000,1.000000,"Timer"};
+item49[] = {"Arrived_newPos",4,218,-200.000000,725.000000,-100.000000,775.000000,0.000000,"Arrived newPos"};
+item50[] = {"Drop_down",2,250,-200.000000,875.000000,-100.000000,925.000000,0.000000,"Drop down"};
+item51[] = {"Suppression_or_n",4,218,-50.000000,1025.000000,50.000000,1075.000000,0.000000,"Suppression" \n "or near"};
+item52[] = {"Max__time",4,218,-325.000000,1025.000000,-225.000000,1075.000000,1.000000,"Max. time"};
+item53[] = {"Clean_up_3",2,250,-200.000000,1200.000000,-100.000000,1250.000000,0.000000,"Clean-up"};
+item54[] = {"Unconscious",4,218,150.000000,-150.000000,250.000000,-100.000000,6.000000,"Unconscious"};
+item55[] = {"Time_out",4,218,150.000000,1400.000000,250.000000,1450.000000,3.000000,"Time out"};
+item56[] = {"Always",8,218,-1500.000000,1400.000000,-1400.000000,1450.000000,0.000000,"Always"};
+item57[] = {"exit",4,218,-600.000000,-425.000000,-500.000000,-350.000000,2.000000,"exit"};
+item58[] = {"End_1",1,250,-600.000000,-250.000000,-500.000000,-200.000000,0.000000,"End"};
+version=1;
+class LayoutItems
+{
+	class Item0
+	{
+		class ItemInfo
+		{
+			FontFace="Arial";
+			FontHeight=10;
+			lStyle=1;
+			Align=0;
+		};
+	};
+	class Item21
+	{
+		class ItemInfo
+		{
+			FontFace="Arial";
+			FontHeight=19;
+			FontWeight=700;
+			lStyle=1;
+			FontColor=16777215;
+			lColor=-1;
+		};
+		BgColor=0;
+	};
+	class Item45
+	{
+		class ItemInfo
+		{
+			FontFace="Arial";
+			FontHeight=19;
+			FontWeight=700;
+			lStyle=1;
+			FontColor=16777215;
+			lColor=-1;
+		};
+		BgColor=1950967920;
+	};
+	class Item46
+	{
+		class ItemInfo
+		{
+			FontFace="Arial";
+			FontHeight=19;
+			FontWeight=700;
+			lStyle=1;
+			FontColor=16777215;
+			lColor=-1;
+		};
+		BgColor=4194432;
+	};
+};
+link0[] = {1,6};
+link1[] = {1,57};
+link2[] = {3,18};
+link3[] = {4,17};
+link4[] = {5,11};
+link5[] = {6,17};
+link6[] = {7,8};
+link7[] = {8,10};
+link8[] = {9,7};
+link9[] = {10,55};
+link10[] = {10,56};
+link11[] = {11,19};
+link12[] = {11,20};
+link13[] = {12,15};
+link14[] = {13,14};
+link15[] = {14,9};
+link16[] = {14,28};
+link17[] = {15,16};
+link18[] = {16,14};
+link19[] = {17,3};
+link20[] = {17,5};
+link21[] = {17,29};
+link22[] = {17,54};
+link23[] = {18,12};
+link24[] = {18,13};
+link25[] = {19,18};
+link26[] = {20,22};
+link27[] = {22,23};
+link28[] = {22,24};
+link29[] = {23,26};
+link30[] = {24,25};
+link31[] = {25,49};
+link32[] = {26,27};
+link33[] = {27,25};
+link34[] = {28,7};
+link35[] = {29,30};
+link36[] = {30,31};
+link37[] = {30,32};
+link38[] = {31,38};
+link39[] = {32,18};
+link40[] = {33,36};
+link41[] = {34,35};
+link42[] = {35,39};
+link43[] = {36,37};
+link44[] = {37,35};
+link45[] = {38,33};
+link46[] = {38,34};
+link47[] = {39,47};
+link48[] = {40,42};
+link49[] = {41,44};
+link50[] = {42,8};
+link51[] = {43,41};
+link52[] = {44,8};
+link53[] = {47,40};
+link54[] = {47,43};
+link55[] = {47,48};
+link56[] = {48,47};
+link57[] = {49,50};
+link58[] = {50,51};
+link59[] = {50,52};
+link60[] = {51,53};
+link61[] = {52,53};
+link62[] = {53,8};
+link63[] = {54,2};
+link64[] = {55,2};
+link65[] = {56,4};
+link66[] = {57,58};
+globals[] = {0.000000,0,0,0,0,640,480,1,225,6316128,1,-1872.445801,594.427734,1279.814941,-590.437561,1166,884,1};
+window[] = {2,-1,-1,-1,-1,870,52,673,52,3,1184};
+*//*%FSM</HEAD>*/
+class FSM
+{
+        fsmName = "Danger";
+        class States
+        {
+                /*%FSM<STATE "Init">*/
+                class Init
+                {
+                        name = "Init";
+                        itemno = 1;
+                        init = /*%FSM<STATEINIT""">*/"private [""_oldDangerCause"", ""_dangerCause"", ""_dangerPos"", ""_dangerUntil"", ""_dangerCausedBy""];" \n
+                         "private _vehicle = vehicle _this;" \n
+                         "private _behaviour = behaviour _this;" \n
+                         "private _maxTime = 240;" \n
+                         "" \n
+                         "// add current data to queue for evaluation" \n
+                         "_queue pushBack [_dangerCause, _dangerPos, _dangerUntil, _dangerCausedBy];" \n
+                         "" \n
+                         "// Function to retrieve the highest priority event from the _queue" \n
+                         "private _civilianPriorities = [" \n
+                         "    1,  // DCEnemyDetected" \n
+                         "    4,  // DCFire" \n
+                         "    9,  // DCHit" \n
+                         "    4,  // DCEnemyNear" \n
+                         "    5,  // DCExplosion" \n
+                         "    8,  // DCDeadBodyGroup" \n
+                         "    4,  // DCDeadBody" \n
+                         "    6,  // DCScream" \n
+                         "    0,  // DCCanFire" \n
+                         "    7  // DCBulletClose" \n
+                         "];" \n
+                         "" \n
+                         "// vanilla function ~ finds most dangerous threat " \n
+                         "private _fnc_biggestDanger = {" \n
+                         "	private _priorCur = _civilianPriorities select _dangerCause;" \n
+                         "	{" \n
+                         "		private _cause = _x select 0;" \n
+                         "		private _priorNew = _civilianPriorities select _cause;" \n
+                         "		if (_priorNew >= _priorCur) exitWith {" \n
+                         "			_oldDangerCause = _dangerCause;" \n
+                         "			_dangerCause = _cause;" \n
+                         "			_dangerPos = _x select 1;" \n
+                         "			_dangerUntil = _x select 2;" \n
+                         "			_dangerCausedBy = _x select 3;" \n
+                         "		};" \n
+                         "	} forEach _queue;" \n
+                         "" \n
+                         "	// debug variable" \n
+                         "	_this setVariable [""lambs_main_FSMDangerCauseData"", [_dangerCause, _dangerPos, _dangerUntil, _dangerCausedBy], lambs_main_debug_functions];" \n
+                         "	_queue = [];" \n
+                         "};" \n
+                         "" \n
+                         "// Code from original BIS civilian fsm" \n
+                         "private _dangerCode = _this getVariable ""BIS_dangerHandler"";" \n
+                         "if !(isNil ""_dangerCode"") then {" \n
+                         "	{" \n
+                         "		[_this, _dangerCause] spawn _x;" \n
+                         "	} foreach _dangerCode;" \n
+                         "};" \n
+                         ""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "exit">*/
+                                class exit
+                                {
+                                        itemno = 57;
+                                        priority = 2.000000;
+                                        to="End_1";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"call lambs_danger_fnc_isForcedExit"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 6;
+                                        priority = 0.000000;
+                                        to="Select_danger";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"true"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "End">*/
+                class End
+                {
+                        name = "End";
+                        itemno = 2;
+                        init = /*%FSM<STATEINIT""">*/"// reset" \n
+                         "_this setVariable [""lambs_main_currentTask "", nil, lambs_main_debug_functions];" \n
+                         "_this setBehaviour _behaviour;" \n
+                         "_this setVariable [""DC"", false];		// from vanilla. Uncertain what it does "/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Clean_up">*/
+                class Clean_up
+                {
+                        name = "Clean_up";
+                        itemno = 7;
+                        init = /*%FSM<STATEINIT""">*/"" \n
+                         "// get back in vehicle " \n
+                         "if (_orderedOut) then {[_this] orderGetIn true};" \n
+                         "" \n
+                         "// reset stance " \n
+                         "_this setUnitPos ""AUTO"";"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 8;
+                                        priority = 0.000000;
+                                        to="Reset";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Reset">*/
+                class Reset
+                {
+                        name = "Reset";
+                        itemno = 10;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Time_out">*/
+                                class Time_out
+                                {
+                                        itemno = 55;
+                                        priority = 3.000000;
+                                        to="End";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"time > _maxTime"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 56;
+                                        priority = 0.000000;
+                                        to="Select_danger";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Hide_vs__run">*/
+                class Hide_vs__run
+                {
+                        name = "Hide_vs__run";
+                        itemno = 11;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Run">*/
+                                class Run
+                                {
+                                        itemno = 20;
+                                        priority = 1.000000;
+                                        to="Run";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"random 1 > 0.4"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Hide">*/
+                                class Hide
+                                {
+                                        itemno = 19;
+                                        priority = 0.000000;
+                                        to="Hide";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Man">*/
+                class Man
+                {
+                        name = "Man";
+                        itemno = 14;
+                        init = /*%FSM<STATEINIT""">*/"" \n
+                         "// stance" \n
+                         "if (random 1 > 0.3) then {" \n
+                         "	_this setUnitPos selectRandom [""DOWN"",""DOWN"",""MIDDLE""];" \n
+                         "}; " \n
+                         "" \n
+                         "// animation" \n
+                         "if (_this call lambs_danger_fnc_fsmAllowAnimation) then {" \n
+                         "	_this playMoveNow selectRandom [""ApanPknlMsprSnonWnonDf"", ""ApanPercMsprSnonWnonDf"", ""ApanPpneMsprSnonWnonDf"", ""ApanPpneMrunSnonWnonDf""];" \n
+                         "}; " \n
+                         "" \n
+                         "// execute hide" \n
+                         "[_this,  _dangerPos] call lambs_main_fnc_doHide; " \n
+                         "" \n
+                         ""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Max__time">*/
+                                class Max__time
+                                {
+                                        itemno = 28;
+                                        priority = 1.000000;
+                                        to="Clean_up";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"time > _timeNow"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Suppression">*/
+                                class Suppression
+                                {
+                                        itemno = 9;
+                                        priority = 0.000000;
+                                        to="Clean_up";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"getSuppression _this > 0.99"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Order_out">*/
+                class Order_out
+                {
+                        name = "Order_out";
+                        itemno = 15;
+                        init = /*%FSM<STATEINIT""">*/"[_this] orderGetIn false;" \n
+                         "_orderedOut = true;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 16;
+                                        priority = 0.000000;
+                                        to="Man";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Select_danger">*/
+                class Select_danger
+                {
+                        name = "Select_danger";
+                        itemno = 17;
+                        init = /*%FSM<STATEINIT""">*/"" \n
+                         "// find greatest danger " \n
+                         "call _fnc_biggestDanger;" \n
+                         "" \n
+                         "// shout! ~ Disabled as it seems to have an adverse effect on AI - nkenny" \n
+                         "//if (random 1 > 0.2 && {getSuppression _this isEqualTo 0} && {leader _this isEqualTo _this}) then {" \n
+                         "//    [_this, objNull, 10 + random 100, true] call lambs_main_fnc_doShareInformation;" \n
+                         "//};" \n
+                         "" \n
+                         "// stance and variables" \n
+                         "_this setVariable [""DC"", true];" \n
+                         "" \n
+                         "// settings " \n
+                         "private _orderedOut = false;" \n
+                         "private _timeNow = time + _maxTime;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Unconscious">*/
+                                class Unconscious
+                                {
+                                        itemno = 54;
+                                        priority = 6.000000;
+                                        to="End";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"_this call lambs_danger_fnc_isForced"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Causes__5__6">*/
+                                class Causes__5__6
+                                {
+                                        itemno = 29;
+                                        priority = 4.000000;
+                                        to="Inspect_vs__hide";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"_dangerCause in [5, 6]"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Causes__4__7__9">*/
+                                class Causes__4__7__9
+                                {
+                                        itemno = 3;
+                                        priority = 2.000000;
+                                        to="Hide";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"_dangerCause in [4, 7, 9]"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Causes__1__2__3">*/
+                                class Causes__1__2__3
+                                {
+                                        itemno = 5;
+                                        priority = 0.000000;
+                                        to="Hide_vs__run";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"true"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Hide">*/
+                class Hide
+                {
+                        name = "Hide";
+                        itemno = 18;
+                        init = /*%FSM<STATEINIT""">*/"// debug " \n
+                         "if (lambs_main_debug_FSM_civ) then {""dangerCivilian.fsm Hide!"" call lambs_main_fnc_debugLog;}; " \n
+                         "" \n
+                         "// variable" \n
+                         "_this setVariable [""lambs_main_currentTask"", ""Hide!"", lambs_main_debug_functions];" \n
+                         "" \n
+                         "// tweak behaviour" \n
+                         "_this setBehaviour ""STEALTH"";" \n
+                         "_this setSpeedMode ""FULL"";"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Vehicle">*/
+                                class Vehicle
+                                {
+                                        itemno = 12;
+                                        priority = 1.000000;
+                                        to="Order_out";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"!(isNull objectParent _this)" \n
+                                         "&& {canUnloadInCombat _vehicle}"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Man">*/
+                                class Man
+                                {
+                                        itemno = 13;
+                                        priority = 0.000000;
+                                        to="Man";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Run">*/
+                class Run
+                {
+                        name = "Run";
+                        itemno = 22;
+                        init = /*%FSM<STATEINIT""">*/"// debug " \n
+                         "if (lambs_main_debug_FSM_civ) then {""dangerCivilian.fsm Escape!"" call lambs_main_fnc_debugLog;}; " \n
+                         "" \n
+                         "// variable" \n
+                         "_this setVariable [""lambs_main_currentTask"", ""Escape!"", lambs_main_debug_functions];" \n
+                         "" \n
+                         "// tweak behaviour" \n
+                         "_this setBehaviour ""COMBAT"";" \n
+                         "_this setSpeedMode ""FULL"";"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Vehicle">*/
+                                class Vehicle
+                                {
+                                        itemno = 23;
+                                        priority = 1.000000;
+                                        to="Order_out_1";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"!(isNull objectParent _this)" \n
+                                         "&& {canUnloadInCombat _vehicle}"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Man">*/
+                                class Man
+                                {
+                                        itemno = 24;
+                                        priority = 0.000000;
+                                        to="Man_1";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Man_1">*/
+                class Man_1
+                {
+                        name = "Man_1";
+                        itemno = 25;
+                        init = /*%FSM<STATEINIT""">*/"" \n
+                         "// stance and stop" \n
+                         "doStop _this;" \n
+                         "_this setUnitPos selectRandom [""DOWN"",""MIDDLE"",""MIDDLE"", ""UP""]; " \n
+                         "" \n
+                         "// distance settings  " \n
+                         "private _minDist = 30;" \n
+                         "private _maxdist = switch (_dangerCause) do {" \n
+                         "	case 2: { 50 };" \n
+                         "	case 3: { 200 };" \n
+                         "	case 1; case 5; case 6: { 130 };" \n
+                         "	default { 300 }; " \n
+                         "};" \n
+                         "" \n
+                         "// define new pos! " \n
+                         "private _newPos = _this getPos [_minDist + random (_maxDist - _minDist), (_dangerPos getDir _this) + 30 - random 60];" \n
+                         "_this doMove _newPos;" \n
+                         ""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Arrived_newPos">*/
+                                class Arrived_newPos
+                                {
+                                        itemno = 49;
+                                        priority = 0.000000;
+                                        to="Drop_down";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"_this distance2D _newPos < 5" \n
+                                         "|| {getSuppression _this > 0.99}" \n
+                                         "|| {time > _timeNow}" \n
+                                         "|| {fleeing _this}"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Order_out_1">*/
+                class Order_out_1
+                {
+                        name = "Order_out_1";
+                        itemno = 26;
+                        init = /*%FSM<STATEINIT""">*/"[_this] orderGetIn false;" \n
+                         "_orderedOut = true;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 27;
+                                        priority = 0.000000;
+                                        to="Man_1";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Inspect_vs__hide">*/
+                class Inspect_vs__hide
+                {
+                        name = "Inspect_vs__hide";
+                        itemno = 30;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Inspect_body">*/
+                                class Inspect_body
+                                {
+                                        itemno = 31;
+                                        priority = 1.000000;
+                                        to="Inspect_body";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"random 1 > 0.3"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Hide">*/
+                                class Hide
+                                {
+                                        itemno = 32;
+                                        priority = 0.000000;
+                                        to="Hide";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Man_2">*/
+                class Man_2
+                {
+                        name = "Man_2";
+                        itemno = 35;
+                        init = /*%FSM<STATEINIT""">*/"" \n
+                         "// script " \n
+                         "[_this,  _dangerPos, 10] call lambs_main_fnc_doCheckBody; " \n
+                         "" \n
+                         "// stance " \n
+                         "_this setUnitPos ""MIDDLE"";" \n
+                         "" \n
+                         "// setting" \n
+                         "_dangerCauseOld = _dangerCause;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 39;
+                                        priority = 0.000000;
+                                        to="Check_of_dangers";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Order_out_2">*/
+                class Order_out_2
+                {
+                        name = "Order_out_2";
+                        itemno = 36;
+                        init = /*%FSM<STATEINIT""">*/"[_this] orderGetIn false;" \n
+                         "_orderedOut = true;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 37;
+                                        priority = 0.000000;
+                                        to="Man_2";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Inspect_body">*/
+                class Inspect_body
+                {
+                        name = "Inspect_body";
+                        itemno = 38;
+                        init = /*%FSM<STATEINIT""">*/"// debug " \n
+                         "if (lambs_main_debug_FSM_civ) then {""dangerCivilian.fsm Check Body"" call lambs_main_fnc_debugLog;}; " \n
+                         "" \n
+                         "// variable" \n
+                         "_this setVariable [""lambs_main_currentTask"", ""Check body"", lambs_main_debug_functions];" \n
+                         "" \n
+                         "// tweak behaviour" \n
+                         "_this setBehaviour ""AWARE"";" \n
+                         ""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Vehicle">*/
+                                class Vehicle
+                                {
+                                        itemno = 33;
+                                        priority = 1.000000;
+                                        to="Order_out_2";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"!(isNull objectParent _this)" \n
+                                         "&& {canUnloadInCombat _vehicle}"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Man">*/
+                                class Man
+                                {
+                                        itemno = 34;
+                                        priority = 0.000000;
+                                        to="Man_2";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Clean_up_1">*/
+                class Clean_up_1
+                {
+                        name = "Clean_up_1";
+                        itemno = 42;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 8;
+                                        priority = 0.000000;
+                                        to="Reset";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Clean_up_2">*/
+                class Clean_up_2
+                {
+                        name = "Clean_up_2";
+                        itemno = 44;
+                        init = /*%FSM<STATEINIT""">*/"" \n
+                         "// get back in vehicle " \n
+                         "if (_orderedOut) then {[_this] orderGetIn true};" \n
+                         "" \n
+                         "// reset stance " \n
+                         "_this setUnitPos ""AUTO"";" \n
+                         "" \n
+                         ""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 8;
+                                        priority = 0.000000;
+                                        to="Reset";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Check_of_dangers">*/
+                class Check_of_dangers
+                {
+                        name = "Check_of_dangers";
+                        itemno = 47;
+                        init = /*%FSM<STATEINIT""">*/"call _fnc_biggestDanger;" \n
+                         "private _checkTime = time + 1 + random 1;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Timer">*/
+                                class Timer
+                                {
+                                        itemno = 48;
+                                        priority = 1.000000;
+                                        to="Check_of_dangers";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"time > _checkTime"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Higher_priority">*/
+                                class Higher_priority
+                                {
+                                        itemno = 40;
+                                        priority = 1.000000;
+                                        to="Clean_up_1";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"_dangerCauseOld isNotEqualTo _dangerCause" \n
+                                         "|| {getSuppression _this > 0.9}" \n
+                                         "|| {_this distance2D _dangerCausedBy < 3}"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Time_up">*/
+                                class Time_up
+                                {
+                                        itemno = 41;
+                                        priority = 0.000000;
+                                        to="Clean_up_2";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"time > _timeNow"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Drop_down">*/
+                class Drop_down
+                {
+                        name = "Drop_down";
+                        itemno = 50;
+                        init = /*%FSM<STATEINIT""">*/"" \n
+                         "// chance to stop + animation " \n
+                         "if (random 1 > 0.6 || {_this distance2D _dangerCausedBy < 10} || {_this distance2D _newPos < 3} || {fleeing _this}) then {" \n
+                         "	if (_this call lambs_danger_fnc_fsmAllowAnimation) then { " \n
+                         "		_this playMoveNow selectRandom [""ApanPpneMstpSnonWnonDnon_G01"", ""ApanPpneMstpSnonWnonDnon_G02"",""ApanPpneMstpSnonWnonDnon_G03""];" \n
+                         "		_this stop true;" \n
+                         "	}; " \n
+                         "}; " \n
+                         ""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Max__time">*/
+                                class Max__time
+                                {
+                                        itemno = 52;
+                                        priority = 1.000000;
+                                        to="Clean_up_3";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"time > _timeNow"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Suppression_or_n">*/
+                                class Suppression_or_n
+                                {
+                                        itemno = 51;
+                                        priority = 0.000000;
+                                        to="Clean_up_3";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"getSuppression _this > 0.9" \n
+                                         "|| {_this distance2D _dangerCausedBy < 1.2}"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Clean_up_3">*/
+                class Clean_up_3
+                {
+                        name = "Clean_up_3";
+                        itemno = 53;
+                        init = /*%FSM<STATEINIT""">*/"" \n
+                         "// get back in vehicle " \n
+                         "if (_orderedOut && {!stopped _this} && {_this distance2D _dangerCausedBy > 10}) then {(units _this) orderGetIn true};" \n
+                         "" \n
+                         "// reset stance " \n
+                         "_this setUnitPos ""AUTO"";" \n
+                         "_this stop false;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 8;
+                                        priority = 0.000000;
+                                        to="Reset";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "End_1">*/
+                class End_1
+                {
+                        name = "End_1";
+                        itemno = 58;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                        };
+                };
+                /*%FSM</STATE>*/
+        };
+        initState="Init";
+        finalStates[] =
+        {
+                "End",
+                "End_1",
+        };
+};
+/*%FSM</COMPILE>*/

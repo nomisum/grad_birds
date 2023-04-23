@@ -15,9 +15,7 @@ _flockManager setVariable ["grad_crows_startled", true];
 [_flockManager] call grad_crows_fnc_checkTimeout;
 
 
-[
-	_flockManager
-] remoteExec ["grad_crows_fnc_startleFlock"];
+[_flockManager] spawn grad_crows_fnc_startleFlock; // global crow
 
 
 // move detectors to new landingposition to manage further
