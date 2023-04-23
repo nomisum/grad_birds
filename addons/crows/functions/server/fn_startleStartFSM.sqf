@@ -12,9 +12,11 @@ private _wp3 = ([_flockPos, _flockArea, 270] call BIS_fnc_relPos);
 
 private _flyingCrows = _flockManager getVariable ["grad_crows_flying", []];
 {
-	[_x, _wp0, _wp1, _wp2, _wp3, _flockArea, _flockManager, _foreachindex] execfsm "crows\data\fn_crows.fsm";
+	private _flyingCrow = _x;
+	[_flyingCrow, _wp0, _wp1, _wp2, _wp3, _flockArea, _flockManager, _foreachindex] execfsm "crows\data\fn_crows.fsm";
 } forEach _flyingCrows;
 
 {
+	private _flyingCrow = _x;
 	[_flyingCrow] call grad_crows_fnc_addCrowHandlers;
 } forEach _flyingCrows;

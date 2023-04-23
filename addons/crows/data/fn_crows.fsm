@@ -42,7 +42,7 @@ link19[] = {16,6};
 link20[] = {17,15};
 link21[] = {17,16};
 globals[] = {0.000000,0,0,0,0,640,480,1,54,6316128,1,-170.639282,651.296082,506.143982,-118.566910,1642,1248,1};
-window[] = {0,-1,-1,-1,-1,1724,638,3491,174,1,1677};
+window[] = {0,-1,-1,-1,-1,1991,441,3294,441,1,1677};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -200,23 +200,16 @@ class FSM
                 {
                         name = "MoveFlockCrow";
                         itemno = 6;
-                        init = /*%FSM<STATEINIT""">*/"_id = _i % 4;" \n
-                         "_wp = _wps select _id;" \n
-                         "_wp = [" \n
-                         "	(_wp select 0) - _flockArea + (random _flockArea)*2," \n
-                         "	(_wp select 1) - _flockArea + (random _flockArea)*2," \n
-                         "	(_wp select 2) - 10 + random 20" \n
-                         "];" \n
-                         "_dis = _crow distance _wp;" \n
+                        init = /*%FSM<STATEINIT""">*/"private _positionInFormation = getPos (((_flockManager getVariable [""grad_crows_flying"", [objNull]]) select 0));" \n
+                         "_positionInFormation = [_positionInFormation#0+random _index - random _index, _positionInFormation#1+_index" \n
+                         "+random _index - random _index, random 3];" \n
+                         "" \n
+                         "_dis = _crow distance _positionInFormation;" \n
                          "_time = (_dis);" \n
                          "" \n
-                         "private _positionInFormation = getPos (((_flockManager getVariable [""grad_crows_flying"", [objNull]]) select 0));" \n
-                         "_positionInFormation = [_positionInFormation+_index, _positionInFormation+_index" \n
-                         ", random 3];" \n
                          "[_crow, getpos _crow, _positionInFormation, _time] call grad_crows_fnc_moveCrowGlobal;" \n
                          "" \n
                          "" \n
-                         "_i = _i + 1;" \n
                          "_time = time;" \n
                          ""/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
